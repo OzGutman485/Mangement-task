@@ -9,7 +9,7 @@ const taskScheme = new mongoose.Schema({
         require: true
     },
     time: {
-
+ type:
     }
 })
 const Task = mongoose.model('Task', taskScheme)
