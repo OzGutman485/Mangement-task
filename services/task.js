@@ -1,29 +1,42 @@
 const task = require('../controllers/task');
 const task = require('../model/task')
 
-const createTask = async (name, description, time) => {
+const createTask = async (taskData) => {
     try {
-        const tasks = await task.find({ name: name });
-        if (tasks.length > 0) {
-            return { success: false, error: "name movie already exist!" };
+        if (!taskData.name || !taskData.description) {
+            return { 
+                success: false, 
+                error: "Missing required fields" 
+            };
         }
-        if (!name || !description || !time) {
-            return { success: false, error: "Missing required fields" };
+        const existingTask = await task.findOne({ name: taskData.name });
+        if (existingTask) {
+            return { 
+                success: false, 
+                error: "Task with this name already exists" 
+            };
         }
-        const task = new task({
-            name: name,
-            description: description,
-            time: time
+        const newTask = new task({
+            name: taskData.name,
+            description: taskData.description,
+            dueDate: taskData.dueDate,
+            priority: taskData.priority || 'Medium',
+            status: 'Pending',
+            tags: taskData.tags || []
         });
 
-        const savedtask = await task.save();
-        if (!savedtask) {
-            return { success: false, error: "Could not create task" };
-        }
-        return { success: true, data: savedMovie };
+        const savedTask = await newTask.save();
+        return { 
+            success: true, 
+            data: savedTask 
+        };
     }
     catch (error) {
-        return { success: false, error: error.message };
+        console.error('Create task error:', error);
+        return { 
+            success: false, 
+            error: error.message 
+        };
     }
 }
 const deleteTask = async (id) => {
@@ -41,36 +54,146 @@ const deleteTask = async (id) => {
 }
 const getTask = async (id) => {
     try {
-        const task = await task.findById(id)
-        return { data: task }
+        const task = await task.findById(id);
+        if (!task) {
+            return { 
+                success: false, 
+                error: "Task not found" 
+            };
+        }
+        return { 
+            success: true, 
+            data: task 
+        };
     }
     catch (error) {
-        return { data: error }
+        console.error('Get task error:', error);
+        return { 
+            success: false, 
+            error: error.message 
+        };
     }
 }
-const putTask = async (id, taskData) => {
+const putTask = async (id, updateData) => {
     try {
-        const updateTask = await task.findByIdAndUpdate(
-            id,
-            {
-                name: taskData.name,
-                description: taskData.description,
-                time: task.time
-            }, { new: true, runValidators: true }
-        )
-        return { data: updateTask }
+        const task = await task.findById(id);
+        if (!task) {
+            return { 
+                success: false, 
+                error: "Task not found" 
+            };
+        }
+        const allowedUpdates = ['name', 'description', 'dueDate', 'priority', 'tags'];
+        const updates = {};
+
+        allowedUpdates.forEach(field => {
+            if (updateData[field] !== undefined) {
+                updates[field] = updateData[field];
+            }
+        });
+
+        const updatedTask = await task.findByIdAndUpdate(
+            id, 
+            updates, 
+            { new: true, runValidators: true }
+        );
+
+        return { 
+            success: true, 
+            data: updatedTask 
+        };
     }
     catch (error) {
-        return { data: error }
+        console.error('Update task error:', error);
+        return { 
+            success: false, 
+            error: error.message 
+        };
     }
 }
-const getAlltasks = async () => {
+const getAllTasks = async (page = 1, limit = 10) => {
     try {
-        const result = await task.find({})
-        return { date: result }
+        const startIndex = (page - 1) * limit;
+
+        const tasks = await task.find()
+            .sort({ createdAt: -1 })
+            .skip(startIndex)
+            .limit(limit);
+
+        const totalTasks = await task.countDocuments();
+
+        return { 
+            success: true, 
+            data: tasks,
+            total: totalTasks,
+            page,
+            totalPages: Math.ceil(totalTasks / limit)
+        };
     }
     catch (error) {
-        return { data: error }
+        console.error('Get all tasks error:', error);
+        return { 
+            success: false, 
+            error: error.message 
+        };
     }
-}
-module.export = { createTask, getTask, deleteTask, putTask, getAlltasks }
+};
+const completeTask = async (id) => {
+    try {
+        const task = await task.findById(id);
+        if (!task) {
+            return { 
+                success: false, 
+                error: "Task not found" 
+            };
+        }
+
+        task.status = 'Completed';
+        task.completedAt = new Date();
+
+        const updatedTask = await task.save();
+        return { 
+            success: true, 
+            data: updatedTask 
+        };
+    }
+    catch (error) {
+        console.error('Complete task error:', error);
+        return { 
+            success: false, 
+            error: error.message 
+        };
+    }
+};
+
+const searchTasks = async (query) => {
+    try {
+        if (!query) {
+            return { 
+                success: false, 
+                error: "Search query is required" 
+            };
+        }
+
+        const tasks = await task.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } },
+                { tags: { $regex: query, $options: 'i' } }
+            ]
+        });
+
+        return { 
+            success: true, 
+            data: tasks 
+        };
+    }
+    catch (error) {
+        console.error('Search tasks error:', error);
+        return { 
+            success: false, 
+            error: error.message 
+        };
+    }
+};
+module.export = { createTask, getTask, deleteTask, putTask, getAllTasks ,searchTasks,completeTask}

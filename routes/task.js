@@ -3,7 +3,7 @@ const express = require('express')
 var router = express.Router()
 
 router.route('/')
-    .get(taskController.getAlltasks)
+    .get(taskController.getAllTasks)
     .post(taskController.createTask)
 router.route('/:id')
     .delete(taskController.deleteTask)
