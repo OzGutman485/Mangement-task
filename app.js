@@ -30,7 +30,7 @@ app.use((err, req, res, next) => {
 // Connect to MongoDB
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://host.docker.internal:27017/netflix-server', {
+        await mongoose.connect('mongodb://localhost:27017/task-mangement', {
             serverSelectionTimeoutMS: 5000,
             useNewUrlParser: true,
             useUnifiedTopology: true
