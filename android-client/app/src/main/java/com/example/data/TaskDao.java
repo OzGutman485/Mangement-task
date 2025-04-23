@@ -15,7 +15,7 @@ public interface TaskDao {
     LiveData<List<Task>> getTasks();
 
     @Query("Select * from task where task.id =:id")
-    Task get(String id);
+    LiveData<Task> get(int id);
     @Insert
     void insert(Task task);
 

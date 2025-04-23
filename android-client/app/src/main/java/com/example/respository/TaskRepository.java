@@ -36,6 +36,9 @@ public class TaskRepository {
     public void delete(Task task){
         exceutor.execute(()->taskDao.insert(task));
     }
+    public LiveData<Task> get(int id){
+        return taskDao.get(id);
+    }
     //important! to use for in desotry of someView when i dont use more in the view and exuctor!
     public void shutdown(){
         exceutor.shutdown();

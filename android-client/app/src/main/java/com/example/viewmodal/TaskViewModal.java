@@ -12,6 +12,11 @@ import java.util.List;
 
 public class TaskViewModal extends ViewModel {
     private TaskRepository repository;
+
+    public LiveData<List<Task>> getListLiveData() {
+        return listLiveData;
+    }
+
     private LiveData<List<Task>> listLiveData;
 
     public TaskViewModal(Application application) {
@@ -26,5 +31,8 @@ public class TaskViewModal extends ViewModel {
     }
     public void delete(Task task){
         repository.delete(task);
+    }
+    public LiveData<Task> getTaskById(int id){
+        return repository.get(id);
     }
 }
