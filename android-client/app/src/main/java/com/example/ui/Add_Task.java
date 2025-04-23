@@ -34,8 +34,8 @@ public class Add_Task extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_task);
-        editTextTitle = findViewById(R.id.titleCardView);
-        editTextDescription = findViewById(R.id.descriptionCardView);
+        editTextTitle = findViewById(R.id.titleEditText);
+        editTextDescription = findViewById(R.id.descriptionEditText);
         textViewDate = findViewById(R.id.dateValueText);
         textViewTime = findViewById(R.id.timeValueText);
         CardView cardViewDate = findViewById(R.id.dateCardView);

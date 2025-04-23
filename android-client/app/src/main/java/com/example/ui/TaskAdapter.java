@@ -34,10 +34,13 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskViewHolder> {
         @SuppressLint("DiffUtilEquals")
         @Override
         public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            boolean isSameIsDone = (oldItem.getIsdone() == null && newItem.getIsdone() == null) ||
+                    (oldItem.getIsdone() != null && oldItem.getIsdone().equals(newItem.getIsdone()));
+
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getDescription().equals(newItem.getDescription()) &&
                     oldItem.getDate().equals(newItem.getDate()) &&
-                    oldItem.getIsdone().equals(newItem.getIsdone());
+                    isSameIsDone;
         }
     };
 

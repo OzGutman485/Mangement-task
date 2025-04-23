@@ -34,7 +34,7 @@ public class TaskRepository {
         exceutor.execute(()->taskDao.insert(task));
     }
     public void delete(Task task){
-        exceutor.execute(()->taskDao.insert(task));
+        exceutor.execute(()->taskDao.delete(task));
     }
     public LiveData<Task> get(int id){
         return taskDao.get(id);
