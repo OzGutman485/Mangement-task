@@ -24,6 +24,8 @@ public interface TaskDao {
 
     @Delete
     void delete(Task task);
+    @Query("SELECT * FROM task ORDER BY id DESC LIMIT 1")
+    Task getLastInsertedTask();
 
 
 }
