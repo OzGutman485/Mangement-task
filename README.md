@@ -20,6 +20,7 @@ The application follows the MVVM (Model-View-ViewModel) architecture pattern and
 - **Repository**: For abstract data access layer
 
 ## Project Structure
+
 com.example/
 ├── data/
 │   ├── Task.java                # Entity class for tasks
@@ -36,7 +37,7 @@ com.example/
 │   ├── HomeTask.java            # Main activity showing task list
 │   └── TaskAdapter.java         # RecyclerView adapter for tasks
 └── viewmodal/
-└── TaskViewModal.java       # ViewModel for tasks
+    └── TaskViewModal.java       # ViewModel for tasks
 
 ## How to Use the Application
 
