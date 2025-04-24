@@ -23,21 +23,21 @@ The application follows the MVVM (Model-View-ViewModel) architecture pattern and
 
 com.example/
 ├── data/
-│   ├── Task.java                # Entity class for tasks
-│   ├── TaskDao.java             # Data Access Object interface
-│   └── TaskDatebase.java        # Room database configuration
+│   ├── Task.java                ## Entity class for tasks
+│   ├── TaskDao.java             ## Data Access Object interface
+│   └── TaskDatebase.java        ## Room database configuration
 ├── notification/
-│   ├── NotificationHelper.java  # Creates and displays notifications
-│   ├── TaskAlarmReceiver.java   # BroadcastReceiver for alarms
-│   └── TaskScheduler.java       # Schedules task reminders
+│   ├── NotificationHelper.java  ## Creates and displays notifications
+│   ├── TaskAlarmReceiver.java   ## BroadcastReceiver for alarms
+│   └── TaskScheduler.java       ## Schedules task reminders
 ├── repository/
-│   └── TaskRepository.java      # Repository for data operations
+│   └── TaskRepository.java      ## Repository for data operations
 ├── ui/
-│   ├── Add_Task.java            # Activity for adding/editing tasks
-│   ├── HomeTask.java            # Main activity showing task list
-│   └── TaskAdapter.java         # RecyclerView adapter for tasks
+│   ├── Add_Task.java            ## Activity for adding/editing tasks
+│   ├── HomeTask.java            ## Main activity showing task list
+│   └── TaskAdapter.java         ## RecyclerView adapter for tasks
 └── viewmodal/
-    └── TaskViewModal.java       # ViewModel for tasks
+    └── TaskViewModal.java       ## ViewModel for tasks
 
 ## How to Use the Application
 
