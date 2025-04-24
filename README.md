@@ -20,6 +20,7 @@ The application follows the MVVM (Model-View-ViewModel) architecture pattern and
 - **Repository**: For abstract data access layer
 
 ## Project Structure
+after you come inside the path android-client\app\src\main\java you will see this path of the project:
 
 ```
 com.example/
