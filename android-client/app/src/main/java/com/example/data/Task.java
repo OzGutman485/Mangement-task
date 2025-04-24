@@ -3,15 +3,13 @@ package com.example.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDateTime;
-
 @Entity
 public class Task {
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -23,12 +21,12 @@ public class Task {
         this.isdone = isdone;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String dateTime) {
+        this.date = dateTime;
     }
 
     public String getDescription() {
@@ -46,19 +44,30 @@ public class Task {
     public void setTitle(String title) {
         this.title = title;
     }
+    public String getTime() {
+        return time;
+    }
 
-    public Task(String id, Boolean isdone, LocalDateTime dateTime, String description, String title) {
-        this.id = id;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Task(Boolean isdone, String date,String time, String description, String title) {
         this.isdone = isdone;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time=time;
         this.description = description;
         this.title = title;
     }
 @PrimaryKey(autoGenerate = true)
-    private String id;
+    private int id;
     private String title;
     private String description;
-    private LocalDateTime dateTime;
+    private String date;
+
+
+
+    private String time;
     private Boolean isdone;
 
 

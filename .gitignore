@@ -174,4 +174,4 @@ cython_debug/
 .pypirc
 package-lock.json
 package.json
-/node_modules
+server/

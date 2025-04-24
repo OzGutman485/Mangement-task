@@ -15,7 +15,7 @@ public interface TaskDao {
     LiveData<List<Task>> getTasks();
 
     @Query("Select * from task where task.id =:id")
-    Task get(String id);
+    LiveData<Task> get(int id);
     @Insert
     void insert(Task task);
 
@@ -24,6 +24,8 @@ public interface TaskDao {
 
     @Delete
     void delete(Task task);
+    @Query("SELECT * FROM task ORDER BY id DESC LIMIT 1")
+    Task getLastInsertedTask();
 
 
 }
